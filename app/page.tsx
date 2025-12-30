@@ -1,7 +1,7 @@
 "use client";
 
-import { getRandomValues } from "crypto";
-import { useEffect, useId, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { DraggableWordComponent } from "./_components/DraggableWordComponent";
 
 const DEFAULT_CHARACTER_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -115,8 +115,10 @@ export default function Home() {
         </div>
         <div className="flex h-full flex-col overflow-y-scroll border p-2">
           Word List:
-          <div className="flex flex-row flex-wrap gap-2">
-            {wordList.map((word) => DraggableWordComponent(word))}
+          <div className="flex flex-wrap gap-2">
+            {wordList.map((word) => (
+              <DraggableWordComponent word={word}></DraggableWordComponent>
+            ))}
           </div>
         </div>
       </div>
@@ -135,24 +137,6 @@ function GridComponent(grid: string[][]): React.ReactElement {
           ))}
         </div>
       ))}
-    </div>
-  );
-}
-
-function DraggableWordComponent(word: string): React.ReactElement {
-  const characterElements: React.ReactElement[] = [];
-
-  for (let i = 0; i < word.length; i++) {
-    characterElements.push(
-      <p className="size-8 text-center">{word.charAt(i)}</p>,
-    );
-  }
-  return (
-    <div
-      className="flex size-10 w-fit flex-row rounded-xl bg-emerald-500 p-1"
-      draggable
-    >
-      {characterElements}
     </div>
   );
 }
