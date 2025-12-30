@@ -11,7 +11,7 @@ export function DraggableWordComponent({
   const position = useMousePosition();
   const rotation = useRotation();
 
-  console.log(rotation);
+  const shouldLengthen = rotation % 90 !== 0;
 
   const characterElements: React.ReactElement[] = [];
 
@@ -21,7 +21,7 @@ export function DraggableWordComponent({
         style={{
           transform: `rotate(-${rotation}deg)`,
         }}
-        className="size-8 text-center"
+        className={`${shouldLengthen ? "size-[44.8px]" : "size-8"} text-center`}
       >
         {word.charAt(i)}
       </p>,
@@ -35,7 +35,7 @@ export function DraggableWordComponent({
         left: isDragging ? position.x : undefined,
         top: isDragging ? position.y : undefined,
         transform: isDragging
-          ? `translate(-50%, -50%) rotate(${rotation}deg)`
+          ? `rotate(${rotation}deg) translate(-50%, -50%) `
           : undefined,
       }}
       onPointerDown={() => setIsDragging(true)}

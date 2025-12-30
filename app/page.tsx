@@ -9,10 +9,12 @@ export default function Home() {
   const MIN_SIZE = 1;
   const MAX_SIZE = 20;
 
+  const DEFAULT_SIZE = 10;
+
   const [CHARACTER_SET, setCharacterSet] = useState(DEFAULT_CHARACTER_SET);
 
-  const [GRIDROWS, setGridRows] = useState(5);
-  const [GRIDCOLUMNS, setGridColumns] = useState(5);
+  const [GRIDROWS, setGridRows] = useState(DEFAULT_SIZE);
+  const [GRIDCOLUMNS, setGridColumns] = useState(DEFAULT_SIZE);
 
   const wordCreatorRef = useRef<HTMLInputElement>(null);
 
