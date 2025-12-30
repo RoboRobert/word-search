@@ -9,7 +9,7 @@ export function DraggableWordComponent({
 }): React.ReactElement {
   const [isDragging, setIsDragging] = useState(false);
   const position = useMousePosition();
-  const rotation = useRotation();
+  const [rotation, resetRotation] = useRotation(isDragging);
 
   const shouldLengthen = rotation % 90 !== 0;
 
@@ -17,31 +17,34 @@ export function DraggableWordComponent({
 
   for (let i = 0; i < word.length; i++) {
     characterElements.push(
-      <p
+      <div
         style={{
           transform: `rotate(-${rotation}deg)`,
         }}
-        className={`${shouldLengthen ? "size-[44.8px]" : "size-8"} text-center`}
+        className={`${shouldLengthen ? "w-[44.8px]" : "w-8"} grid place-items-center`}
       >
         {word.charAt(i)}
-      </p>,
+      </div>,
     );
   }
 
   return (
     <div
-      className={"absolute"}
+      className={`${isDragging ? "absolute" : "static"}`}
       style={{
         left: isDragging ? position.x : undefined,
         top: isDragging ? position.y : undefined,
         transform: isDragging
-          ? `rotate(${rotation}deg) translate(-50%, -50%) `
+          ? `translate(-50%, -50%) rotate(${rotation}deg)`
           : undefined,
       }}
       onPointerDown={() => setIsDragging(true)}
-      onPointerUp={() => setIsDragging(false)}
+      onPointerUp={() => {
+        resetRotation();
+        setIsDragging(false);
+      }}
     >
-      <div className="flex size-10 w-fit flex-row rounded-xl border-2 border-yellow-400 p-1">
+      <div className="flex h-fit w-fit flex-row rounded-xl bg-black outline-2 -outline-offset-3 outline-yellow-400">
         {characterElements}
       </div>
     </div>

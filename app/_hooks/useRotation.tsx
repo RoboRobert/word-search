@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
 
-export const useRotation = () => {
+export function useRotation(isDragging: boolean): [number, () => void] {
   const [rotation, setRotation] = useState(0);
+
+  console.log(isDragging);
+
+  const resetRotation = () => {
+    setRotation(0);
+  };
 
   useEffect(() => {
     const updateRotation = (event: KeyboardEvent) => {
-      const key = event.code;
-      console.log(key);
-      if (key === "KeyQ") {
-        setRotation((r) => (r - 45 + 360) % 360);
-      } else if (key === "KeyE") {
-        setRotation((r) => (r + 45) % 360);
+      if (isDragging) {
+        const key = event.code;
+        if (key === "KeyQ") {
+          setRotation((r) => (r - 45 + 360) % 360);
+        } else if (key === "KeyE") {
+          setRotation((r) => (r + 45) % 360);
+        }
       }
     };
 
@@ -18,7 +25,7 @@ export const useRotation = () => {
     return () => {
       window.removeEventListener("keydown", updateRotation);
     };
-  }, []);
+  }, [isDragging]);
 
-  return rotation;
-};
+  return [rotation, resetRotation];
+}

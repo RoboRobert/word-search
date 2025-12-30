@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <div className="flex h-screen w-screen flex-row items-center gap-4 py-2">
-      <div className="flex h-full w-80 flex-col gap-2 border-2 p-2">
+      <div className="flex h-full w-80 flex-col gap-2 overflow-y-auto border-2 p-2">
         <div className="flex flex-col border p-2">
           <label htmlFor="numRows">Number of Rows: {GRIDROWS}</label>
           <input
