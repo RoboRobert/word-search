@@ -4,6 +4,8 @@ import { getRandomValues } from "crypto";
 import { useEffect, useId, useState } from "react";
 
 export default function Home() {
+  const MIN_SIZE = 1;
+  const MAX_SIZE = 20;
   const CHARACTER_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const [GRIDROWS, setGridRows] = useState(5);
@@ -27,9 +29,9 @@ export default function Home() {
         <input
           id="numRows"
           type="range"
-          min={1}
-          max={10}
-          defaultValue={GRIDROWS}
+          min={MIN_SIZE}
+          max={MAX_SIZE}
+          value={GRIDROWS}
           onChange={(changeEvent) =>
             setGridRows(Number(changeEvent.target.value))
           }
@@ -39,34 +41,41 @@ export default function Home() {
         <input
           id="numColumns"
           type="range"
-          min={1}
-          max={10}
-          defaultValue={GRIDCOLUMNS}
+          min={MIN_SIZE}
+          max={MAX_SIZE}
+          value={GRIDCOLUMNS}
           onChange={(changeEvent) =>
             setGridColumns(Number(changeEvent.target.value))
           }
         />
+
+        <label htmlFor="gridSize">
+          Size: {Math.max(GRIDROWS, GRIDCOLUMNS)}
+        </label>
+        <input
+          id="gridSize"
+          type="range"
+          min={MIN_SIZE}
+          max={MAX_SIZE}
+          value={Math.max(GRIDROWS, GRIDCOLUMNS)}
+          onChange={(changeEvent) => {
+            setGridColumns(Number(changeEvent.target.value));
+            setGridRows(Number(changeEvent.target.value));
+          }}
+        />
       </div>
-      <div
-        className={`grid grid-rows-${GRIDROWS} grid-cols-${GRIDCOLUMNS} m-auto h-fit w-fit gap-2`}
-      >
-        {grid.map((row) =>
-          row.map((character) => (
-            <div key={crypto.randomUUID()}>{character}</div>
-          )),
-        )}
-      </div>
+      <div className="m-auto h-fit w-fit">{renderGrid(grid)}</div>
     </div>
   );
 }
 
 function renderGrid(grid: string[][]): React.ReactElement {
   return (
-    <div>
+    <div className="flex flex-col">
       {grid.map((row) => (
-        <div>
+        <div className="flex flex-row justify-between">
           {row.map((character) => (
-            <p>{character}</p>
+            <p className="m-auto size-8 text-center">{character}</p>
           ))}
         </div>
       ))}
