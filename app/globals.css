@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --color-foreground: var(--color-foreground);
+  --color-background: var(--color-background);
+  --color-accent: var(--color-accent);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  --color-accent: #ffbb00; /* Orange */
+  --color-foreground: #000000; /* Black */
+  --color-background: #ffffff; /* White */
+}
+
+.dark {
+  --color-accent: #1c48a7; /* Orange */
+  --color-foreground: #ffffff; /* White */
+  --color-background: #000000; /* Black */
 }

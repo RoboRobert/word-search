@@ -38,8 +38,11 @@ export default function Home() {
   }
 
   return (
-    <div className="flex h-screen w-screen flex-row items-center gap-4 py-2">
-      <div className="flex h-full w-80 flex-col gap-2 overflow-y-auto border-2 p-2">
+    <div className="bg-accent flex h-screen w-screen flex-row items-center gap-4 p-2">
+      <div
+        style={{ boxShadow: "4px 4px 0px 0px #000000" }}
+        className="flex h-full w-82 flex-col gap-2 overflow-y-auto border-2 p-2"
+      >
         <div className="flex flex-col border p-2">
           <label htmlFor="numRows">Number of Rows: {GRIDROWS}</label>
           <input
@@ -91,11 +94,11 @@ export default function Home() {
           <input
             id="characterSet"
             type="text"
-            className="border bg-white text-black"
+            className="border"
             onInput={(event) => setCharacterSet(event.currentTarget.value)}
           ></input>
           <button
-            className="border bg-white text-black"
+            className="border"
             onClick={() => setCharacterSet(DEFAULT_CHARACTER_SET)}
           >
             Reset Character Set
@@ -105,13 +108,10 @@ export default function Home() {
           <input
             id="wordCreator"
             type="text"
-            className="border bg-white text-black"
+            className="border"
             ref={wordCreatorRef}
           ></input>
-          <button
-            className="border bg-white text-black"
-            onClick={() => addWordToList()}
-          >
+          <button className="border" onClick={() => addWordToList()}>
             Add Word to List
           </button>
         </div>
