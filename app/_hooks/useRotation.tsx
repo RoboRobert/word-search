@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 export function useRotation(isDragging: boolean): [number, () => void] {
   const [rotation, setRotation] = useState(0);
 
-  console.log(isDragging);
-
   const resetRotation = () => {
     setRotation(0);
   };

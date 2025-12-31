@@ -132,10 +132,17 @@ export default function Home() {
 function GridComponent(grid: string[][]): React.ReactElement {
   return (
     <div className="flex flex-col">
-      {grid.map((row) => (
+      {grid.map((row, rowIndex) => (
         <div className="flex flex-row justify-between">
-          {row.map((character) => (
-            <p className="size-8 text-center">{character}</p>
+          {row.map((character, columnIndex) => (
+            <div
+              className="grid size-8 place-items-center select-none"
+              data-droppable={true}
+              data-row={rowIndex}
+              data-column={columnIndex}
+            >
+              {character}
+            </div>
           ))}
         </div>
       ))}
