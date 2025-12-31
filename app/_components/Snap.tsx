@@ -4,14 +4,20 @@ import { useState } from "react";
 import { useMousePosition } from "../_hooks/useMousePosition";
 import { useRotation } from "../_hooks/useRotation";
 
-export function Draggable({
+export function Snap({
+  draggable = false,
+  rotatable = false,
+  childrenRetainOrientation = false,
   children,
 }: {
+  draggable?: boolean;
+  rotatable?: boolean;
+  childrenRetainOrientation?: boolean;
   children: React.ReactElement;
 }): React.ReactElement {
   const [isDragging, setIsDragging] = useState(false);
   const mousePosition = useMousePosition();
-  const [rotation, resetRotation] = useRotation(isDragging);
+  const [rotation, setRotation] = useState(0);
 
   let position = undefined;
   let snapPosition = undefined;
@@ -32,6 +38,16 @@ export function Draggable({
     }
   }
 
+  function updateRotation(key: string) {
+    if (isDragging) {
+      if (key === "KeyQ") {
+        setRotation((r) => (r - 45 + 360) % 360);
+      } else if (key === "KeyE") {
+        setRotation((r) => (r + 45) % 360);
+      }
+    }
+  }
+
   console.log(snapPosition);
 
   if (!isDragging) {
@@ -45,6 +61,7 @@ export function Draggable({
   return (
     <div
       className={"absolute select-none"}
+      tabIndex={-1}
       style={{
         left: position?.x,
         top: position?.y,
@@ -52,10 +69,16 @@ export function Draggable({
           ? `translate(-50%, -50%) rotate(${rotation}deg)`
           : undefined,
       }}
-      onPointerDown={() => setIsDragging(true)}
+      onPointerDown={() => {
+        if (draggable) setIsDragging(true);
+      }}
       onPointerUp={() => {
-        resetRotation();
-        setIsDragging(false);
+        if (draggable) setIsDragging(false);
+
+        if (rotatable) setRotation(0);
+      }}
+      onKeyDown={(event) => {
+        if (rotatable) updateRotation(event.code);
       }}
     >
       {children}

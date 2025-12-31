@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useMousePosition } from "../_hooks/useMousePosition";
 import { useRotation } from "../_hooks/useRotation";
-import { Draggable } from "./Draggable";
+import { Snap } from "./Snap";
 
 export function DraggableWordComponent({
   word,
@@ -19,9 +19,6 @@ export function DraggableWordComponent({
   for (let i = 0; i < word.length; i++) {
     characterElements.push(
       <div
-        style={{
-          transform: `rotate(-${rotation}deg)`,
-        }}
         className={`${shouldLengthen ? "w-[44.8px]" : "w-8"} grid place-items-center`}
       >
         {word.charAt(i)}
@@ -30,10 +27,10 @@ export function DraggableWordComponent({
   }
 
   return (
-    <Draggable>
+    <Snap draggable rotatable childrenRetainOrientation>
       <div className="flex h-fit w-fit flex-row rounded-xl bg-black outline-2 -outline-offset-3 outline-yellow-400">
         {characterElements}
       </div>
-    </Draggable>
+    </Snap>
   );
 }
